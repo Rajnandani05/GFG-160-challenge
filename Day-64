@@ -1,0 +1,34 @@
+// User function Template for Java
+
+class Solution 
+{
+    public static int[] productExceptSelf(int arr[]) 
+    {
+       int n = arr.length; 
+       int product = 1, zeroCount = 0;
+       for(int x : arr)
+       {
+           if (x == 0) zeroCount++; 
+           else product *= x;
+       }
+       int[] result = new int [n];
+       
+       if (zeroCount > 1)
+       {
+           return result;
+       }
+       
+       for(int i = 0; i < n; i++)
+       {
+           if( zeroCount == 0)
+           {
+               result[i] = product / arr[i];
+           } else 
+           {
+               result[i] = (arr[i] == 0) ? product : 0;
+           }
+       }
+       
+       return result;
+   }
+}
