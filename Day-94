@@ -1,0 +1,58 @@
+/*Complete the given function
+Node is as follows:
+class Node {
+    int data;
+    Node left;
+    Node right;
+
+    Node(int data) {
+        this.data = data;
+        left = null;
+        right = null;
+    }
+}*/
+
+class Tree {
+    // Function to serialize a tree and return a list containing nodes of tree.
+    public ArrayList<Integer> serialize(Node root) {
+        ArrayList<Integer> result = new ArrayList<>();
+        if(root == null) return result;
+        Queue<Node> queue = new LinkedList<>();
+        queue.offer(root);
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            if(current == null){
+                result.add(-1);
+            } else {
+                result.add(current.data);
+                queue.offer(current.left);
+                queue.offer(current.right);
+            }
+        }
+        return result;
+    }
+
+    // Function to deserialize a list and construct the tree.
+    public Node deSerialize(ArrayList<Integer> arr) {
+        if (arr == null || arr.size() == 0) return null;
+        Queue<Node> queue = new LinkedList<>();
+        int index = 0;
+        Node root = new Node(arr.get(index++));
+        queue.offer(root);
+        while (!queue.isEmpty() && index < arr.size()) {
+            Node current = queue.poll();
+            int leftVal = arr.get(index++);
+            if (leftVal != -1) {
+                current.left = new Node(leftVal);
+                queue.offer(current.left);
+            }
+            if(index >= arr.size()) break;
+            int rightVal = arr.get(index++);
+            if(rightVal != -1) {
+                current.right = new Node(rightVal);
+                queue.offer(current.right);
+            }
+        }
+        return root;
+    }
+};
